@@ -1,0 +1,832 @@
+<!doctype html>
+<!--
+  Sensitá Clinic, prévia do site v2 (Veyroni). Versão anterior: index-v1.html
+  Paleta tirada do logo (#774548). Páginas de cada profissional em /equipe/.
+  [CONFIRMAR] com a clínica antes de publicar:
+  - preço de lançamento (proposta Veyroni, não aparece no site)
+  - quem decide na clínica (dona ou sócia)
+  - faixa etária e se atende homens (head spa e massagem)
+  - se cada profissional tem horário próprio
+  - autorização de cada profissional para nome, foto e número (LGPD)
+  - autorização para mostrar a nota 5,0 / 215 no JSON-LD (aggregateRating)
+  - link exato da ficha no Google (CONFIG.googleUrl)
+  - texto vigente do Código de Ética do CFN e da norma do conselho da Karina
+  [PREENCHER]: logo em alta (o atual é 150 px), fotos (equipe e espaço), Instagram, frase de cada profissional,
+  lista de tratamentos, registro da Karina, CRN da Luana, estacionamento, URL do site.
+  Manutenção: os dados do negócio ficam no objeto CONFIG no fim do arquivo.
+-->
+<html lang="pt-BR" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sensitá Clinic · Estética e Saúde na Vila Nova, Jaraguá do Sul</title>
+<meta name="description" content="Harmonização facial, sobrancelhas, head spa, unhas, terapias manuais e nutrição na Vila Nova, em Jaraguá do Sul. Escolha o serviço e fale direto com a profissional no WhatsApp.">
+<meta name="theme-color" content="#3E2225">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Sensitá Clinic · Seu horário com quem você já confia.">
+<meta property="og:description" content="Escolha o serviço e fale direto com a profissional no WhatsApp. Vila Nova, Jaraguá do Sul.">
+<!-- [PREENCHER] URL definitiva do site: og:image precisa de endereço absoluto (https://.../assets/fachada.jpg) -->
+<meta property="og:image" content="assets/fachada.jpg">
+<meta property="og:image:alt" content="Fachada da Sensitá Clinic na Vila Nova">
+<link rel="icon" href="assets/logo-sensita.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+/* Abertura: roda antes da página pintar, para não piscar. Sem JS ou com movimento reduzido, não aparece.
+   Para mostrar só na primeira visita da sessão, troque SEMPRE por false. */
+(function () {
+  var SEMPRE = true, r = document.documentElement;
+  r.classList.replace("no-js", "js");
+  try {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!SEMPRE && sessionStorage.getItem("sensita-intro")) return;
+    sessionStorage.setItem("sensita-intro", "1");
+  } catch (e) {}
+  r.classList.add("intro-on");
+})();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BeautySalon",
+  "name": "Sensitá Clinic Estética e Saúde",
+  "telephone": "+55 47 98465-9072",
+  "logo": "assets/logo-sensita.png",
+  "image": "assets/fachada.jpg",
+  "address": { "@type": "PostalAddress", "streetAddress": "R. Manoel Luís da Silva, 182", "addressLocality": "Jaraguá do Sul", "addressRegion": "SC", "addressCountry": "BR" },
+  "areaServed": "Vila Nova, Jaraguá do Sul",
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "20:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "12:00" }
+  ],
+  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "5.0", "reviewCount": "215", "bestRating": "5" }
+}
+</script>
+<style>
+:root{
+  --bg:#774548; --deep:#5A3135; --deeper:#3E2225; --hover:#84525A;
+  --blush:#F3C8C1; --blush-2:#F8D9D4; --cream:#FBF3EF; --dim:#EBD5D0;
+  --line:rgba(251,243,239,.18);
+  --ease:cubic-bezier(.23,1,.32,1); --ease-io:cubic-bezier(.77,0,.175,1);
+  --pad:max(20px, env(safe-area-inset-left));
+  --display:"Bricolage Grotesque", "Hanken Grotesk", system-ui, sans-serif;
+  --text:"Hanken Grotesk", system-ui, sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--bg);color:var(--cream);font:400 17px/1.55 var(--text);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;overflow-x:hidden}
+a{color:var(--blush);text-underline-offset:3px}
+@media (hover:hover) and (pointer:fine){a:hover{color:var(--cream)}}
+a,button{touch-action:manipulation}
+.btn,.chip,.pick-more,.pro-more,.map,.stat,.tx-btn{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.02em;line-height:1.05;margin:0;text-wrap:balance}
+p{margin:0;text-wrap:pretty}
+ul,ol{margin:0;padding:0;list-style:none}
+img{display:block;max-width:100%}
+:focus-visible{outline:3px solid var(--cream);outline-offset:3px;border-radius:10px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:1180px;margin:0 auto;padding-left:var(--pad);padding-right:max(20px, env(safe-area-inset-right))}
+section[id]{scroll-margin-top:16px}
+
+/* botões */
+.btn{position:relative;overflow:hidden;isolation:isolate;display:flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:0 24px;border-radius:999px;background:var(--blush);color:var(--deeper);font:600 18px/1.1 var(--text);text-decoration:none;border:0;cursor:pointer;transition:transform 160ms var(--ease), background-color 200ms var(--ease)}
+.btn::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);transform:translateX(-120%)}
+.btn.shine::after{animation:shine 700ms var(--ease)}
+@keyframes shine{to{transform:translateX(120%)}}
+.btn:hover{color:var(--deeper)}
+.btn:active{transform:scale(.97)}
+.btn-ghost{background:transparent;color:var(--cream);box-shadow:inset 0 0 0 1.5px var(--line)}
+.btn-ghost:hover{color:var(--cream)}
+@media (hover:hover) and (pointer:fine){.btn:hover{background:var(--blush-2)}.btn:hover::after{animation:shine 700ms var(--ease)}.btn-ghost:hover{background:var(--hover)}}
+
+/* palco com a foto (inspirado na abertura com foto cheia) */
+.skip{position:absolute;left:12px;top:-60px;z-index:20;padding:12px 16px;border-radius:12px;background:var(--cream);color:var(--deep);font-weight:600}
+.skip:focus{top:12px}
+.stage{position:relative;isolation:isolate;overflow:hidden;background:var(--deeper)}
+.stage-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 55%;z-index:-2;transform:scale(1.08);transform-origin:60% 50%}
+.ready .stage-img{transform:scale(1);transition:transform 2400ms var(--ease)}
+@media (max-width:959px){
+  .stage-img{bottom:auto;height:min(125vw, 100%);object-position:58% 50%;-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent);mask-image:linear-gradient(180deg,#000 72%,transparent)}
+  .stage-shade{background:linear-gradient(180deg,rgba(62,34,37,.72) 0%,rgba(62,34,37,.2) 14%,rgba(62,34,37,.3) 22%,rgba(62,34,37,.9) 34%,var(--deeper) 44%)}
+}
+.stage-shade{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(62,34,37,.72) 0%,rgba(62,34,37,.25) 26%,rgba(62,34,37,.35) 46%,rgba(62,34,37,.94) 72%,var(--deeper) 100%)}
+.nav{display:none}
+.kicker{font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--blush);margin-bottom:14px;text-shadow:0 1px 12px rgba(30,10,12,.5)}
+.hero h1{text-shadow:0 2px 24px rgba(30,10,12,.45)}
+.stat{display:inline-flex;align-items:center;gap:12px;margin-top:18px;padding:10px 18px 10px 10px;border-radius:999px;background:rgba(62,34,37,.55);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:inset 0 0 0 1px var(--line);color:var(--cream);text-decoration:none;max-width:100%}
+.stat:hover{color:var(--cream)}
+.stat b{width:44px;height:44px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--blush);color:var(--deeper);font:800 22px/1 var(--display)}
+.stat span{font-size:15px;line-height:1.3}
+.stage .sel{background:rgba(90,49,53,.82);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:inset 0 0 0 1px var(--line), 0 30px 60px -20px rgba(20,6,8,.7)}
+.stage .strip button{background:var(--deep)}
+
+/* topo */
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:max(14px, env(safe-area-inset-top));padding-bottom:14px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--cream)}
+.logo{width:52px;height:52px;border-radius:50%;box-shadow:0 0 0 1.5px var(--line)}
+.brand span{font-size:14px;line-height:1.3;color:var(--dim)}
+.top .btn-ghost{min-height:44px;padding:0 18px;font-size:16px}
+
+/* primeira tela */
+.hero{position:relative;padding-top:38vh;padding-top:38svh;padding-bottom:40px;display:grid;gap:22px}
+.hero h1{font-size:clamp(2.45rem, 1.3rem + 5vw, 5rem);max-width:12ch}
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
+.w > span{display:inline-block}
+.rating{display:flex;align-items:center;gap:10px;margin-top:8px;color:var(--cream);text-decoration:none;font-weight:500;min-height:44px}
+.rating:hover{color:var(--cream)}
+.rating .stars{color:var(--blush);letter-spacing:2px;font-size:15px;display:inline-flex}
+.rating u{text-decoration-color:var(--line);text-underline-offset:4px}
+.hero-txt{position:relative}
+.hero-where{display:none;color:var(--dim);font-size:15px;margin-top:6px}
+.glow{position:absolute;z-index:-1;width:560px;height:560px;border-radius:50%;background:radial-gradient(closest-side,rgba(243,200,193,.22),rgba(243,200,193,0));top:-160px;right:-220px;pointer-events:none}
+
+.sel-wrap{position:relative}
+.sel{position:relative;background:var(--deep);border-radius:28px;padding:18px 16px 16px;box-shadow:0 30px 60px -30px rgba(30,10,12,.6)}
+.badge{display:none;position:absolute;width:150px;height:150px;top:-64px;right:-48px;z-index:2;pointer-events:none}
+.badge svg{width:100%;height:100%;animation:spin 22s linear infinite}
+.badge svg text{font:600 11.5px var(--text);letter-spacing:2.6px;fill:var(--cream)}
+.badge img{position:absolute;inset:38px;width:74px;height:74px;border-radius:50%}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sel-label{font-size:15px;font-weight:600;color:var(--dim);margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;padding:0 16px;border-radius:999px;border:0;background:transparent;color:var(--cream);box-shadow:inset 0 0 0 1.5px var(--line);font:500 16px/1 var(--text);cursor:pointer;transition:background-color 220ms var(--ease), color 220ms var(--ease), box-shadow 220ms var(--ease), transform 160ms var(--ease)}
+.chip:active{transform:scale(.95)}
+.chip[aria-pressed="true"]{background:var(--blush);color:var(--deeper);box-shadow:none}
+@media (hover:hover) and (pointer:fine){.chip[aria-pressed="false"]:hover{background:var(--hover)}}
+.who{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.strip{position:relative;display:flex;gap:6px;margin:0 0 10px}
+.strip button{border:0;padding:0;cursor:pointer;-webkit-appearance:none;appearance:none;position:relative;z-index:1;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--bg);color:var(--dim);font:800 18px/1 var(--display);transition:color 300ms var(--ease), opacity 300ms var(--ease), transform 300ms var(--ease)}
+.strip button:not(.on){opacity:.55;transform:scale(.84)}
+.strip button:active{transform:scale(.92)}
+@media (hover:hover) and (pointer:fine){.strip button:not(.on):hover{opacity:.85;transform:scale(.92)}}
+.strip button.on{color:var(--deeper);background:transparent}
+.spot{position:absolute;left:0;top:0;width:44px;height:44px;border-radius:50%;background:var(--blush);box-shadow:0 0 0 6px rgba(243,200,193,.18), 0 0 28px rgba(243,200,193,.45);transition:transform 520ms var(--ease)}
+.no-js .spot{display:none}
+.pick{transition:opacity 240ms var(--ease), transform 240ms var(--ease), filter 240ms var(--ease)}
+.pick.swap{opacity:0;transform:translateY(8px);filter:blur(4px)}
+.pick-name{font:800 30px/1.05 var(--display);letter-spacing:-.02em}
+.pick-svc{color:var(--blush);font-weight:600;font-size:17px;margin-top:6px}
+.pick-more{display:inline-flex;align-items:center;min-height:44px;font-size:15px;font-weight:500}
+.sel .btn{margin-top:8px;width:100%}
+.cta-note{font-size:14px;color:var(--dim);margin-top:10px;text-align:center}
+.fallback{display:none}
+.fallback a{display:flex;justify-content:space-between;gap:12px;align-items:center;min-height:52px;color:var(--cream);text-decoration:none;border-bottom:1px solid var(--line);font-weight:500}
+.fallback a span{color:var(--blush);font-size:15px}
+.no-js .js-only{display:none}
+.no-js .fallback{display:block}
+
+/* faixa de palavras das clientes */
+.marquee{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0;background:var(--deep)}
+.marquee-track{display:flex;width:max-content;animation:marq 38s linear infinite}
+@media (hover:hover) and (pointer:fine){.marquee:hover .marquee-track{animation-play-state:paused}}
+.marquee ul{display:flex;align-items:center;gap:28px;padding-right:28px}
+.marquee li{display:flex;align-items:center;gap:28px;font:800 clamp(1.6rem, 1.2rem + 2vw, 2.6rem)/1 var(--display);letter-spacing:-.02em;white-space:nowrap}
+.marquee li::after{content:"";width:12px;height:12px;border-radius:50%;background:var(--blush)}
+.marquee li:nth-child(even){color:var(--blush)}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* seções */
+.sec{padding-top:80px;padding-bottom:80px}
+.sec + .sec{border-top:1px solid var(--line)}
+.sec h2{font-size:clamp(2.1rem, 1.3rem + 3.2vw, 3.6rem);max-width:16ch}
+.sec-sub{color:var(--dim);margin-top:12px;max-width:52ch}
+
+/* entrada ao rolar */
+.js [data-r]{opacity:0;transform:translateY(22px);transition:opacity 700ms var(--ease), transform 700ms var(--ease);transition-delay:calc(var(--i, 0) * 70ms)}
+.js [data-r].in{opacity:1;transform:none}
+
+/* equipe */
+.eq-head{display:grid;gap:28px}
+.eq-photo{margin:0;border-radius:28px;overflow:hidden;background:var(--deep);box-shadow:0 30px 60px -30px rgba(30,10,12,.6)}
+.eq-photo img{width:100%;height:auto;aspect-ratio:672/824;object-fit:cover;transform:scale(1.06);transition:transform 1400ms var(--ease)}
+.eq-photo.in img{transform:scale(1)}
+@media (min-width:960px){.eq-head{grid-template-columns:minmax(0,1fr) minmax(0,.8fr);gap:64px;align-items:end}.eq-photo{margin-top:-120px}}
+@media (prefers-reduced-motion:reduce){.eq-photo img{transform:none !important}}
+.team{margin-top:40px;display:grid}
+.pro{position:relative;display:grid;grid-template-columns:64px minmax(0,1fr);gap:4px 16px;padding:24px 0;border-top:1px solid var(--line)}
+.pro::before{content:"";position:absolute;inset:0 -14px;border-radius:22px;background:var(--deep);transform:scaleX(.94);opacity:0;transition:opacity 300ms var(--ease), transform 400ms var(--ease);z-index:-1}
+.team{position:relative;z-index:0}
+.av{width:64px;height:64px;border-radius:50%;background:var(--deep);color:var(--blush);display:grid;place-items:center;font:800 28px/1 var(--display);grid-row:span 2;transition:transform 400ms var(--ease), background-color 300ms var(--ease), color 300ms var(--ease)}
+.pro h3{font-size:24px}
+.pro h3 a{color:var(--cream);text-decoration:none;background:linear-gradient(var(--blush),var(--blush)) 0 100%/0 2px no-repeat;transition:background-size 400ms var(--ease)}
+.pro-svc{color:var(--blush);font-weight:500;margin-top:4px}
+.pro-sub{color:var(--dim);font-size:15px;margin-top:2px}
+.pro-tel{color:var(--dim);font-size:15px;margin-top:6px;font-variant-numeric:tabular-nums}
+.slot{display:block;height:12px;border-radius:6px;margin-top:10px;border:1px dashed rgba(251,243,239,.3);width:72%}
+.slot.sm{width:38%}
+.pro-act{grid-column:1 / -1;display:grid;gap:4px;margin-top:14px}
+.pro-act .btn{min-height:52px;font-size:17px}
+.pro-more{display:inline-flex;align-items:center;justify-content:center;min-height:44px;font-size:15px;font-weight:500}
+@media (hover:hover) and (pointer:fine){
+  .pro:hover::before{opacity:1;transform:none}
+  .pro:hover .av{transform:scale(1.08) rotate(-6deg);background:var(--blush);color:var(--deeper)}
+  .pro:hover h3 a{background-size:100% 2px}
+}
+
+/* depoimentos */
+.quotes{margin-top:40px;display:grid;gap:14px}
+.q{margin:0;padding:22px 20px;border-radius:22px;background:var(--deep);transition:transform 400ms var(--ease)}
+.q blockquote{margin:0;font-size:18px;line-height:1.5}
+.q figcaption{margin-top:12px;font-size:14px;color:var(--dim)}
+.q.big{background:transparent;padding:4px 0 18px}
+.q.big blockquote{font:600 clamp(1.7rem, 1.1rem + 2.6vw, 2.7rem)/1.2 var(--display);letter-spacing:-.015em}
+.q.big blockquote::before{content:"“";display:block;font:800 80px/.6 var(--display);color:var(--blush);margin-bottom:10px}
+.js .q.big .wd{opacity:.22;transition:opacity 300ms var(--ease)}
+.js .q.big .wd.lit{opacity:1}
+@media (hover:hover) and (pointer:fine){.q:not(.big):hover{transform:translateY(-4px) rotate(-.4deg)}}
+.more{display:inline-flex;align-items:center;min-height:44px;margin-top:20px;font-weight:600}
+
+/* espaço (claro) */
+.space{background:var(--cream);color:var(--deep);padding-top:80px;padding-bottom:80px;overflow:hidden}
+.space h2{font-size:20px;font-family:var(--text);font-weight:600;letter-spacing:0;color:var(--bg)}
+.space .lines{margin-top:18px;font:800 clamp(2.4rem, 1.2rem + 6vw, 6.4rem)/.98 var(--display);letter-spacing:-.035em}
+.space .lines span{display:block}
+.js .space .lines span{white-space:nowrap;will-change:transform;width:max-content}
+.space .lines span + span{color:var(--bg)}
+.space p.cap{margin-top:22px;color:var(--bg);max-width:44ch}
+.space :focus-visible{outline-color:var(--deep)}
+
+/* como funciona */
+.steps{position:relative;margin-top:40px;display:grid;gap:30px}
+.steps::before,.steps::after{content:"";position:absolute;left:21px;top:8px;bottom:8px;width:2px;background:var(--line)}
+.steps::after{background:var(--blush);transform-origin:top;transform:scaleY(var(--p, 0))}
+.no-js .steps::after{transform:none}
+.steps li{position:relative;z-index:1;display:grid;grid-template-columns:44px minmax(0,1fr);gap:4px 16px}
+.steps .n{grid-row:span 2;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--deep);color:var(--blush);font:800 20px/1 var(--display);box-shadow:0 0 0 1.5px var(--line);transition:background-color 300ms var(--ease), color 300ms var(--ease)}
+.steps li.on .n{background:var(--blush);color:var(--deeper)}
+.steps h3{font-size:22px;padding-top:8px}
+.steps p{color:var(--dim)}
+.help{margin-top:40px;display:grid;gap:14px;max-width:420px}
+.help p{color:var(--dim);font-size:15px}
+
+/* onde fica */
+.where{margin-top:40px;display:grid;gap:18px}
+.map{display:block;text-decoration:none;color:var(--cream);background:var(--deep);border-radius:28px;padding:24px 22px;position:relative;overflow:hidden;transition:transform 200ms var(--ease)}
+.map::before{content:"";position:absolute;width:220px;height:220px;border-radius:50%;right:-70px;bottom:-90px;box-shadow:0 0 0 1.5px var(--line), 0 0 0 30px rgba(251,243,239,.03), 0 0 0 31.5px var(--line), 0 0 0 62px rgba(251,243,239,.02), 0 0 0 63.5px var(--line);transition:transform 600ms var(--ease)}
+.map:hover{color:var(--cream)}
+.map:active{transform:scale(.985)}
+@media (hover:hover) and (pointer:fine){.map:hover::before{transform:scale(1.12)}}
+.map-addr{position:relative;font:800 clamp(1.7rem, 1.2rem + 2vw, 2.4rem)/1.05 var(--display);letter-spacing:-.02em}
+.map-bairro{position:relative;color:var(--dim);margin-top:8px}
+.map-go{position:relative;display:inline-flex;align-items:center;min-height:44px;margin-top:18px;padding:0 18px;border-radius:999px;background:var(--blush);color:var(--deeper);font-weight:600}
+.hours{border-radius:28px;box-shadow:inset 0 0 0 1.5px var(--line);padding:22px}
+.status{display:flex;align-items:center;gap:10px;font-weight:600;color:var(--cream);min-height:1.55em}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--blush);flex:none}
+.status.open .dot{background:#BFE3C4;animation:pulse 1.8s var(--ease) infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(191,227,196,.6)}100%{box-shadow:0 0 0 12px rgba(191,227,196,0)}}
+.hours dl{margin:14px 0 0;display:grid;grid-template-columns:minmax(0,1fr) auto}
+.hours dt,.hours dd{margin:0;padding:12px 0;border-top:1px solid var(--line)}
+.hours dd{text-align:right;font-variant-numeric:tabular-nums;color:var(--dim)}
+.hours .today{font-weight:600;color:var(--cream)}
+
+/* rodapé */
+.foot-wrap{background:var(--deeper)}
+.foot{padding-top:56px;padding-bottom:calc(48px + 84px + env(safe-area-inset-bottom));display:grid;gap:28px}
+.foot .logo{width:72px;height:72px}
+.foot h2{font:600 15px/1.3 var(--text);letter-spacing:0;color:var(--dim);margin-bottom:6px}
+.foot a.big{font:800 26px/1.1 var(--display);color:var(--cream);text-decoration:none;display:inline-flex;min-height:44px;align-items:center}
+@media (hover:hover) and (pointer:fine){.foot a.big:hover{color:var(--blush)}.nav a:hover{background:rgba(251,243,239,.12);color:var(--cream)}}
+.foot small{color:var(--dim);font-size:14px}
+.foot small a{color:var(--dim)}
+.foot-team{display:flex;flex-wrap:wrap;gap:4px 14px}
+.foot-team a{display:inline-flex;align-items:center;min-height:44px;color:var(--cream);font-size:15px}
+
+/* barra fixa (celular) */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:10;padding:12px max(16px, env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));background:rgba(90,49,53,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line);transform:translateY(110%);transition:transform 380ms var(--ease)}
+.bar.show{transform:none}
+.bar .btn{width:100%}
+.no-js .bar{display:none}
+
+/* sequência de abertura */
+.js .load{opacity:0;transform:translateY(18px)}
+.js .w > span{transform:translateY(105%)}
+.ready .load{opacity:1;transform:none;transition:opacity 800ms var(--ease), transform 800ms var(--ease);transition-delay:var(--d, 0ms)}
+.ready .w > span{transform:none;transition:transform 900ms var(--ease);transition-delay:calc(120ms + var(--i) * 60ms)}
+
+@media (min-width:720px){
+  .quotes{grid-template-columns:repeat(2, minmax(0,1fr))}
+  .q.big{grid-column:1 / -1}
+  .team{grid-template-columns:repeat(2, minmax(0,1fr));column-gap:56px}
+  .where{grid-template-columns:1.2fr 1fr;align-items:start}
+  .steps{grid-template-columns:repeat(3, minmax(0,1fr));gap:32px}
+  .steps::before,.steps::after{left:22px;right:22px;top:21px;bottom:auto;width:auto;height:2px}
+  .steps::after{transform-origin:left;transform:scaleX(var(--p, 0))}
+  .steps li{grid-template-columns:1fr}
+  .steps .n{grid-row:auto;margin-bottom:14px}
+  .steps h3{padding-top:0}
+  .foot{grid-template-columns:1fr 1.2fr 1fr 1fr;padding-bottom:56px}
+}
+@media (min-width:960px){
+  .hero-where{display:block}
+  .hero{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:64px;align-items:end;padding-top:max(220px, 30vh);padding-bottom:72px;min-height:calc(100vh - 80px);min-height:calc(100svh - 80px)}
+  .stage-img{object-position:center 50%}
+  .stage-shade{background:linear-gradient(90deg,rgba(62,34,37,.9) 0%,rgba(62,34,37,.55) 38%,rgba(62,34,37,.1) 70%),linear-gradient(180deg,rgba(62,34,37,.6) 0%,rgba(62,34,37,0) 22%,rgba(62,34,37,0) 70%,rgba(62,34,37,.85) 100%)}
+  .nav{display:flex;gap:4px}
+  .nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:999px;color:var(--cream);text-decoration:none;font-weight:500;font-size:16px;transition:background-color 200ms var(--ease)}
+  .top .btn-ghost{background:rgba(62,34,37,.4);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+  .badge{display:block}
+  .sel{padding:30px 28px 26px}
+  .who{margin-top:22px;padding-top:20px}
+  .strip{margin-bottom:16px}
+  .pro{grid-template-columns:64px minmax(0,1fr) auto;align-items:start}
+  .pro-act{grid-column:3;grid-row:1 / span 2;margin-top:0}
+  .pro-act .btn{padding:0 20px}
+  .quotes{grid-template-columns:1.25fr 1fr 1fr}
+  .q.big{grid-column:1;grid-row:span 2;padding-right:24px}
+  .sec,.space{padding-top:120px;padding-bottom:120px}
+  .bar{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition-property:opacity !important;transition-duration:150ms !important;transition-delay:0s !important}
+  .js .load,.js [data-r]{transform:none !important}
+  .js .w > span{transform:none !important}
+  .stage-img{transform:none !important}
+  .pick.swap{transform:none;filter:none}
+  .space .lines span{transform:none !important;white-space:normal !important;width:auto !important}
+  .js .q.big .wd{opacity:1}
+  .strip button:not(.on){transform:none}
+  .steps::after{transform:none}
+  .bar{transform:none;opacity:0;pointer-events:none}
+  .bar.show{opacity:1;pointer-events:auto}
+}
+/* abertura: as 6 iniciais giram em volta do logo, se juntam nele e a tela se abre em círculo sobre a fachada */
+@property --r{syntax:"<length>";inherits:false;initial-value:0px}
+.intro{display:none}
+.intro-on .intro{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:var(--deeper);color:var(--cream);cursor:pointer;-webkit-mask-image:radial-gradient(circle at 50% 46%,transparent var(--r),#000 calc(var(--r) + 1px));mask-image:radial-gradient(circle at 50% 46%,transparent var(--r),#000 calc(var(--r) + 1px));animation:iris 1000ms cubic-bezier(.77,0,.175,1) 1650ms forwards}
+.intro-on body{overflow:hidden}
+.intro-on.intro-done body{overflow:visible}
+.intro-in{position:relative;width:260px;height:260px;margin-top:-8vh}
+.intro-ring{position:absolute;inset:0;animation:ring 1500ms cubic-bezier(.23,1,.32,1) both, gather 450ms cubic-bezier(.77,0,.175,1) 1250ms forwards}
+.intro-ring span{position:absolute;left:50%;top:50%;width:52px;height:52px;margin:-26px;transform:rotate(var(--a)) translateY(-118px) rotate(calc(var(--a) * -1))}
+.intro-ring b{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:var(--blush);color:var(--deeper);font:800 22px/1 var(--display);opacity:0;animation:pop 520ms cubic-bezier(.34,1.56,.64,1) calc(120ms + var(--i) * 85ms) forwards}
+.intro-ring span:nth-child(even) b{background:var(--deep);color:var(--blush);box-shadow:inset 0 0 0 1.5px var(--line)}
+.intro-logo{position:absolute;left:50%;top:50%;width:112px;height:112px;margin:-56px;border-radius:50%;box-shadow:0 0 0 0 rgba(243,200,193,.5);opacity:0;animation:logo 700ms cubic-bezier(.23,1,.32,1) 650ms forwards, flash 650ms ease-out 1300ms}
+.intro-cap{position:absolute;left:50%;top:100%;width:max-content;transform:translateX(-50%);margin-top:28px;font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);opacity:0;animation:cap 600ms cubic-bezier(.23,1,.32,1) 800ms forwards}
+.intro-skip{position:absolute;bottom:max(24px, env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);font-size:13px;color:var(--dim);opacity:0;animation:cap 400ms ease 600ms forwards}
+@keyframes ring{from{transform:rotate(-140deg) scale(.6)}to{transform:none}}
+@keyframes gather{to{transform:scale(0);opacity:0}}
+@keyframes pop{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:none}}
+@keyframes logo{from{opacity:0;transform:scale(.4) rotate(-30deg)}to{opacity:1;transform:none}}
+@keyframes flash{0%{box-shadow:0 0 0 0 rgba(243,200,193,.55)}100%{box-shadow:0 0 0 70px rgba(243,200,193,0)}}
+@keyframes cap{to{opacity:1}}
+@keyframes iris{to{--r:150vmax}}
+@media (prefers-reduced-motion:reduce){.intro-on .intro{display:none}}
+</style>
+</head>
+<body>
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-in">
+    <div class="intro-ring">
+      <span style="--a:0deg"><b style="--i:0">K</b></span><span style="--a:60deg"><b style="--i:1">J</b></span><span style="--a:120deg"><b style="--i:2">S</b></span><span style="--a:180deg"><b style="--i:3">M</b></span><span style="--a:240deg"><b style="--i:4">R</b></span><span style="--a:300deg"><b style="--i:5">L</b></span>
+    </div>
+    <img class="intro-logo" src="assets/logo-sensita.png" alt="" width="112" height="112">
+    <p class="intro-cap">Estética e Saúde · Vila Nova</p>
+  </div>
+  <p class="intro-skip">Toque para pular</p>
+</div>
+
+<a class="skip" href="#agendar">Pular para o agendamento</a>
+<div class="stage" id="topo">
+  <!-- FOTO: fachada da clínica. Para trocar, substitua assets/fachada.jpg (ideal: 2400 px de largura, WebP) -->
+  <img class="stage-img" src="assets/fachada.jpg" alt="Fachada da Sensitá Clinic na Vila Nova, ao pôr do sol" width="897" height="896" fetchpriority="high">
+  <div class="stage-shade" aria-hidden="true"></div>
+<header class="wrap top load" style="--d:0ms">
+  <a class="brand" href="#topo" aria-label="Sensitá Clinic, início da página">
+    <!-- [PREENCHER] logo em alta resolução (SVG ou PNG 512 px) no lugar deste arquivo -->
+    <img class="logo" src="assets/logo-sensita.png" alt="Sensitá" width="52" height="52">
+    <span>Estética e Saúde<br>Vila Nova</span>
+  </a>
+  <nav class="nav" aria-label="Seções"><a href="#equipe">Equipe</a><a href="#avaliacoes">Avaliações</a><a href="#como-funciona">Como funciona</a><a href="#onde-fica">Onde fica</a></nav>
+  <a class="btn btn-ghost" data-maps href="https://www.google.com/maps/dir/?api=1&destination=R.%20Manoel%20Lu%C3%ADs%20da%20Silva%2C%20182%2C%20Vila%20Nova%2C%20Jaragu%C3%A1%20do%20Sul%2C%20SC" target="_blank" rel="noopener">Como chegar</a>
+</header>
+
+<main>
+<div class="wrap hero">
+  <div class="hero-txt">
+    <h1 id="h1">Seu horário com quem você já confia.</h1>
+    <a class="rating load" style="--d:650ms" data-google href="https://www.google.com/maps/search/?api=1&query=Sensit%C3%A1%20Clinic%20Est%C3%A9tica%20e%20Sa%C3%BAde%2C%20Jaragu%C3%A1%20do%20Sul" target="_blank" rel="noopener"><span class="stars" aria-hidden="true">★★★★★</span><u>5,0 no Google, em <span id="count">215</span> avaliações</u></a>
+    <p class="hero-where load" style="--d:750ms">R. Manoel Luís da Silva, 182, Vila Nova, Jaraguá do Sul</p>
+  </div>
+
+  <div class="sel-wrap load" style="--d:450ms">
+    <div class="badge" aria-hidden="true">
+      <svg viewBox="0 0 150 150"><defs><path id="circ" d="M75,75 m-62,0 a62,62 0 1,1 124,0 a62,62 0 1,1 -124,0"></path></defs><text><textPath href="#circ">ESTÉTICA E SAÚDE • VILA NOVA • JARAGUÁ DO SUL •</textPath></text></svg>
+      <img src="assets/logo-sensita.png" alt="" width="74" height="74">
+    </div>
+    <section class="sel" id="agendar" aria-labelledby="sel-h">
+      <h2 id="sel-h" class="sr-only">Marcar horário</h2>
+      <p class="sel-label" id="lbl-serv">Escolha o serviço</p>
+      <div class="chips js-only" role="group" aria-labelledby="lbl-serv">
+        <button type="button" class="chip" data-id="karina" aria-pressed="false">Harmonização facial</button>
+        <button type="button" class="chip" data-id="juliana" aria-pressed="true">Sobrancelhas</button>
+        <button type="button" class="chip" data-id="sabrina" aria-pressed="false">Head spa</button>
+        <button type="button" class="chip" data-id="mayra" aria-pressed="false">Unhas</button>
+        <button type="button" class="chip" data-id="rafaela" aria-pressed="false">Terapias manuais</button>
+        <button type="button" class="chip" data-id="luana" aria-pressed="false">Nutrição</button>
+      </div>
+      <div class="who js-only">
+        <p class="sel-label">Com quem</p>
+        <!-- FOTO: quando chegarem as fotos, cada <span> recebe <img src="assets/equipe/{id}.jpg" alt=""> em recorte redondo -->
+        <div class="strip" role="group" aria-label="Escolha pela profissional">
+          <i class="spot" id="spot"></i>
+          <button type="button" data-id="karina" aria-pressed="false" aria-label="Karina, harmonização facial">K</button><button type="button" data-id="juliana" class="on" aria-pressed="true" aria-label="Juliana, sobrancelhas">J</button><button type="button" data-id="sabrina" aria-pressed="false" aria-label="Sabrina, head spa">S</button><button type="button" data-id="mayra" aria-pressed="false" aria-label="Mayra, unhas">M</button><button type="button" data-id="rafaela" aria-pressed="false" aria-label="Rafaela, terapias manuais">R</button><button type="button" data-id="luana" aria-pressed="false" aria-label="Luana, nutrição">L</button>
+        </div>
+        <div class="pick" id="pick" aria-live="polite">
+          <p class="pick-name" id="pick-name">Juliana Ferrari</p>
+          <p class="pick-svc" id="pick-svc">Sobrancelhas</p>
+          <a class="pick-more" id="pick-more" href="equipe/juliana.html">Conhecer o trabalho dela</a>
+        </div>
+        <a class="btn" id="cta" href="https://wa.me/5547992239297?text=Oi%2C%20Juliana!%20Vim%20pelo%20site%20da%20Sensit%C3%A1%20e%20queria%20marcar%20sobrancelha." target="_blank" rel="noopener"><span id="cta-t">Marcar com Juliana</span></a>
+        <p class="cta-note" id="cta-note">Abre o WhatsApp dela, (47) 99223-9297, com a mensagem pronta.</p>
+      </div>
+      <ul class="fallback">
+        <li><a href="https://wa.me/5547991541298?text=Oi%2C%20Karina!%20Vim%20pelo%20site%20da%20Sensit%C3%A1%20e%20queria%20marcar%20harmoniza%C3%A7%C3%A3o%20facial.">Harmonização facial com a Karina <span>WhatsApp</span></a></li>
+        <li><a href="https://wa.me/5547992239297?text=Oi%2C%20Juliana!%20Vim%20pelo%20site%20da%20Sensit%C3%A1%20e%20queria%20marcar%20sobrancelha.">Sobrancelhas com a Juliana <span>WhatsApp</span></a></li>
+        <li><a href="https://wa.me/5547999092480?text=Oi%2C%20Sabrina!%20Vim%20pelo%20site%20da%20Sensit%C3%A1%20e%20queria%20marcar%20head%20spa.">Head spa com a Sabrina <span>WhatsApp</span></a></li>
+        <li><a href="https://wa.me/5547988812635?text=Oi%2C%20Mayra!%20Vim%20pelo%20site%20da%20Sensit%C3%A1%20e%20queria%20marcar%20unhas.">Unhas com a Mayra <span>WhatsApp</span></a></li>
+        <li><a href="https://wa.me/5547999363928?text=Oi%2C%20Rafaela!%20Vim%20pelo%20site%20da%20Sensit%C3%A1%20e%20queria%20marcar%20terapia%20manual.">Terapias manuais com a Rafaela <span>WhatsApp</span></a></li>
+        <li><a href="https://wa.me/5547996481438?text=Oi%2C%20Luana!%20Vim%20pelo%20site%20da%20Sensit%C3%A1%20e%20queria%20marcar%20consulta%20de%20nutri%C3%A7%C3%A3o.">Nutrição com a Luana <span>WhatsApp</span></a></li>
+      </ul>
+    </section>
+  </div>
+</div>
+
+</div>
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <ul><li>aconchegante</li><li>caprichosa</li><li>atenciosa</li><li>impecável</li><li>personalizado</li><li>nunca mais mudei</li></ul>
+    <ul><li>aconchegante</li><li>caprichosa</li><li>atenciosa</li><li>impecável</li><li>personalizado</li><li>nunca mais mudei</li></ul>
+  </div>
+</div>
+
+<section class="sec" id="equipe" aria-labelledby="eq-h">
+  <div class="wrap">
+    <h2 id="eq-h" data-r>Cada serviço tem a sua profissional</h2>
+    <div class="eq-head">
+      <div>
+        <p class="sec-sub" data-r style="--i:1">Fale direto com quem vai atender você. Cada uma tem o próprio WhatsApp e a própria agenda.</p>
+      </div>
+      <!-- FOTO: foto da equipe. Para trocar, substitua assets/equipe.jpg -->
+      <figure class="eq-photo" data-r style="--i:2">
+        <img src="assets/equipe.jpg" alt="A equipe da Sensitá Clinic reunida, todas de branco" width="672" height="824" loading="lazy">
+      </figure>
+    </div>
+    <ul class="team">
+      <li class="pro" data-r>
+        <!-- FOTO: trocar por <img class="av" src="assets/equipe/karina.jpg" alt="Karina Ikeda, harmonização facial" width="64" height="64" loading="lazy"> -->
+        <span class="av" aria-hidden="true">K</span>
+        <div>
+          <h3><a href="equipe/karina.html">Karina Ikeda</a></h3>
+          <p class="pro-svc">Harmonização facial</p>
+          <!-- [PREENCHER] registro profissional da Karina (conselho e número) e uma frase sobre ela -->
+          <span class="slot sm" aria-hidden="true"></span>
+          <span class="slot" aria-hidden="true"></span>
+          <p class="pro-tel" data-tel="karina">(47) 99154-1298</p>
+        </div>
+        <div class="pro-act"><a class="btn" data-wa="karina" href="https://wa.me/5547991541298?text=Oi%2C%20Karina!%20Vim%20pelo%20site%20da%20Sensit%C3%A1%20e%20queria%20marcar%20harmoniza%C3%A7%C3%A3o%20facial." target="_blank" rel="noopener">Marcar com Karina</a><a class="pro-more" href="equipe/karina.html">Ver serviços e tratamentos</a></div>
+      </li>
+      <li class="pro" data-r style="--i:1">
+        <!-- FOTO: assets/equipe/juliana.jpg -->
+        <span class="av" aria-hidden="true">J</span>
+        <div>
+          <h3><a href="equipe/juliana.html">Juliana Ferrari</a></h3>
+          <p class="pro-svc">Sobrancelhas</p>
+          <p class="pro-sub">Design de sobrancelha com henna</p>
+          <!-- [PREENCHER] frase sobre ela -->
+          <span class="slot" aria-hidden="true"></span>
+          <p class="pro-tel" data-tel="juliana">(47) 99223-9297</p>
+        </div>
+        <div class="pro-act"><a class="btn" data-wa="juliana" href="https://wa.me/5547992239297?text=Oi%2C%20Juliana!%20Vim%20pelo%20site%20da%20Sensit%C3%A1%20e%20queria%20marcar%20sobrancelha." target="_blank" rel="noopener">Marcar com Juliana</a><a class="pro-more" href="equipe/juliana.html">Ver serviços e tratamentos</a></div>
+      </li>
+      <li class="pro" data-r>
+        <!-- FOTO: assets/equipe/sabrina.jpg -->
+        <span class="av" aria-hidden="true">S</span>
+        <div>
+          <h3><a href="equipe/sabrina.html">Sabrina Vieira</a></h3>
+          <p class="pro-svc">Head spa</p>
+          <!-- [PREENCHER] frase sobre ela -->
+          <span class="slot" aria-hidden="true"></span>
+          <p class="pro-tel" data-tel="sabrina">(47) 99909-2480</p>
+        </div>
+        <div class="pro-act"><a class="btn" data-wa="sabrina" href="https://wa.me/5547999092480?text=Oi%2C%20Sabrina!%20Vim%20pelo%20site%20da%20Sensit%C3%A1%20e%20queria%20marcar%20head%20spa." target="_blank" rel="noopener">Marcar com Sabrina</a><a class="pro-more" href="equipe/sabrina.html">Ver serviços e tratamentos</a></div>
+      </li>
+      <li class="pro" data-r style="--i:1">
+        <!-- FOTO: assets/equipe/mayra.jpg -->
+        <span class="av" aria-hidden="true">M</span>
+        <div>
+          <h3><a href="equipe/mayra.html">Mayra Sampaio</a></h3>
+          <p class="pro-svc">Unhas</p>
+          <!-- [PREENCHER] frase sobre ela -->
+          <span class="slot" aria-hidden="true"></span>
+          <p class="pro-tel" data-tel="mayra">(47) 98881-2635</p>
+        </div>
+        <div class="pro-act"><a class="btn" data-wa="mayra" href="https://wa.me/5547988812635?text=Oi%2C%20Mayra!%20Vim%20pelo%20site%20da%20Sensit%C3%A1%20e%20queria%20marcar%20unhas." target="_blank" rel="noopener">Marcar com Mayra</a><a class="pro-more" href="equipe/mayra.html">Ver serviços e tratamentos</a></div>
+      </li>
+      <li class="pro" data-r>
+        <!-- FOTO: assets/equipe/rafaela.jpg -->
+        <span class="av" aria-hidden="true">R</span>
+        <div>
+          <h3><a href="equipe/rafaela.html">Rafaela Monarin</a></h3>
+          <p class="pro-svc">Terapias manuais</p>
+          <p class="pro-sub">Massagem para alívio de tensão</p>
+          <!-- [PREENCHER] frase sobre ela -->
+          <span class="slot" aria-hidden="true"></span>
+          <p class="pro-tel" data-tel="rafaela">(47) 99936-3928</p>
+        </div>
+        <div class="pro-act"><a class="btn" data-wa="rafaela" href="https://wa.me/5547999363928?text=Oi%2C%20Rafaela!%20Vim%20pelo%20site%20da%20Sensit%C3%A1%20e%20queria%20marcar%20terapia%20manual." target="_blank" rel="noopener">Marcar com Rafaela</a><a class="pro-more" href="equipe/rafaela.html">Ver serviços e tratamentos</a></div>
+      </li>
+      <li class="pro" data-r style="--i:1">
+        <!-- FOTO: assets/equipe/luana.jpg -->
+        <span class="av" aria-hidden="true">L</span>
+        <div>
+          <h3><a href="equipe/luana.html">Luana Correa</a></h3>
+          <p class="pro-svc">Nutrição</p>
+          <!-- [PREENCHER] CRN da Luana (obrigatório no card, Código de Ética do CFN) e uma frase sobre ela -->
+          <span class="slot sm" aria-hidden="true"></span>
+          <span class="slot" aria-hidden="true"></span>
+          <p class="pro-tel" data-tel="luana">(47) 99648-1438</p>
+        </div>
+        <div class="pro-act"><a class="btn" data-wa="luana" href="https://wa.me/5547996481438?text=Oi%2C%20Luana!%20Vim%20pelo%20site%20da%20Sensit%C3%A1%20e%20queria%20marcar%20consulta%20de%20nutri%C3%A7%C3%A3o." target="_blank" rel="noopener">Marcar com Luana</a><a class="pro-more" href="equipe/luana.html">Ver serviços e tratamentos</a></div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec" id="avaliacoes" aria-labelledby="av-h">
+  <div class="wrap">
+    <h2 id="av-h" data-r>O que as clientes dizem</h2>
+    <p class="sec-sub" data-r style="--i:1">5,0 no Google, em 215 avaliações. Trechos copiados das avaliações públicas.</p>
+    <div class="quotes">
+      <figure class="q big">
+        <blockquote id="bigq">Sou uma mulher de 54 anos… desde que iniciei meus cuidados com essa equipe, nunca mais mudei… atendimento impecável e personalizado</blockquote>
+        <figcaption>Avaliação no Google, sobre a equipe</figcaption>
+      </figure>
+      <figure class="q" data-r>
+        <blockquote>“Lugar muito aconchegante e com um atendimento excelente… Juliana e da Karina, sempre muito atenciosas”</blockquote>
+        <figcaption>Avaliação no Google, sobre a Juliana e a Karina</figcaption>
+      </figure>
+      <figure class="q" data-r style="--i:1">
+        <blockquote>“Mayra mora no meu coração… trabalho dela é impecável”</blockquote>
+        <figcaption>Avaliação no Google, sobre a Mayra</figcaption>
+      </figure>
+      <figure class="q" data-r style="--i:2">
+        <blockquote>“massagens com a Rafa… só ela consegue aliviar toda minha tensão… sobrancelha com a Ju designer e henna”</blockquote>
+        <figcaption>Avaliação no Google, sobre a Rafaela e a Juliana</figcaption>
+      </figure>
+      <figure class="q" data-r style="--i:3">
+        <blockquote>“ambiente lindo, super organizado e atendimento de alto nível… May… caprichosa”</blockquote>
+        <figcaption>Avaliação no Google, sobre a Mayra</figcaption>
+      </figure>
+    </div>
+    <a class="more" data-google href="https://www.google.com/maps/search/?api=1&query=Sensit%C3%A1%20Clinic%20Est%C3%A9tica%20e%20Sa%C3%BAde%2C%20Jaragu%C3%A1%20do%20Sul" target="_blank" rel="noopener">Ver todas no Google</a>
+  </div>
+</section>
+
+<!-- FOTO: quando chegarem as 3 fotos do espaço (recepção, uma sala, um detalhe), elas entram nesta seção abaixo da frase -->
+<section class="space" id="espaco" aria-labelledby="es-h">
+  <div class="wrap">
+    <h2 id="es-h">O espaço, nas palavras das clientes</h2>
+    <p class="lines" aria-label="Lugar muito aconchegante. Ambiente lindo, super organizado."><span data-px="-1">“Lugar muito aconchegante”</span><span data-px="1">“ambiente lindo, super organizado”</span></p>
+    <p class="cap">R. Manoel Luís da Silva, 182, na Vila Nova.</p>
+  </div>
+</section>
+
+<section class="sec" id="como-funciona" aria-labelledby="cf-h">
+  <div class="wrap">
+    <h2 id="cf-h" data-r>Como funciona</h2>
+    <ol class="steps" id="steps">
+      <li><span class="n" aria-hidden="true">1</span><h3>Escolha o serviço</h3><p>Cada serviço tem a sua profissional, com WhatsApp próprio.</p></li>
+      <li><span class="n" aria-hidden="true">2</span><h3>Fale direto com ela</h3><p>O botão abre a conversa com a mensagem já escrita. É só enviar e combinar o horário.</p></li>
+      <li><span class="n" aria-hidden="true">3</span><h3>Chegue no horário</h3><p>R. Manoel Luís da Silva, 182, Vila Nova, Jaraguá do Sul.</p></li>
+    </ol>
+    <div class="help" data-r>
+      <a class="btn" href="#agendar">Escolher o serviço</a>
+      <p>Não sabe qual serviço? <a data-wa-geral href="https://wa.me/5547984659072" target="_blank" rel="noopener">Fale com a recepção</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="onde-fica" aria-labelledby="of-h">
+  <div class="wrap">
+    <h2 id="of-h" data-r>Onde fica</h2>
+    <div class="where">
+      <!-- [PREENCHER] mapa estático: quando houver, entra como <img> dentro deste link, com alt="Mapa da Sensitá Clinic na Vila Nova" -->
+      <a class="map" data-r data-maps href="https://www.google.com/maps/dir/?api=1&destination=R.%20Manoel%20Lu%C3%ADs%20da%20Silva%2C%20182%2C%20Vila%20Nova%2C%20Jaragu%C3%A1%20do%20Sul%2C%20SC" target="_blank" rel="noopener">
+        <p class="map-addr">R. Manoel Luís da Silva, 182</p>
+        <p class="map-bairro">Vila Nova, Jaraguá do Sul/SC</p>
+        <span class="map-go">Como chegar</span>
+      </a>
+      <div class="hours" data-r style="--i:1">
+        <p class="status" id="status" aria-live="polite"><i class="dot" aria-hidden="true"></i><span id="status-t"></span></p>
+        <dl>
+          <dt data-days="1-5">Segunda a sexta</dt><dd data-days="1-5">9h às 20h</dd>
+          <dt data-days="6">Sábado</dt><dd data-days="6">9h ao meio-dia</dd>
+          <dt data-days="0">Domingo</dt><dd data-days="0">Fechado</dd>
+        </dl>
+        <!-- [PREENCHER] estacionamento ou referência para chegar -->
+        <span class="slot" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<div class="foot-wrap">
+<footer class="wrap foot">
+  <div><img class="logo" src="assets/logo-sensita.png" alt="Sensitá Clinic" width="72" height="72" loading="lazy"></div>
+  <div>
+    <h2>Dúvidas ou não sabe qual serviço</h2>
+    <a class="big" data-wa-geral href="https://wa.me/5547984659072" target="_blank" rel="noopener">(47) 98465-9072</a>
+    <p style="color:var(--dim);font-size:15px">WhatsApp da recepção</p>
+    <!-- [PREENCHER] Instagram da clínica: <a href="https://instagram.com/...">@...</a> -->
+  </div>
+  <div>
+    <h2>A equipe</h2>
+    <nav class="foot-team" aria-label="Páginas da equipe"><a href="equipe/karina.html">Karina</a><a href="equipe/juliana.html">Juliana</a><a href="equipe/sabrina.html">Sabrina</a><a href="equipe/mayra.html">Mayra</a><a href="equipe/rafaela.html">Rafaela</a><a href="equipe/luana.html">Luana</a></nav>
+  </div>
+  <div>
+    <h2>Endereço</h2>
+    <p>R. Manoel Luís da Silva, 182<br>Vila Nova, Jaraguá do Sul/SC</p>
+    <p style="margin-top:20px"><small>Site feito pela <a href="https://veyronico.vercel.app" target="_blank" rel="noopener">Veyroni</a></small></p>
+  </div>
+</footer>
+</div>
+
+<div class="bar" id="bar" aria-hidden="true">
+  <a class="btn" href="#agendar" tabindex="-1">Marcar horário</a>
+</div>
+
+<script>
+/* Dados do negócio: a manutenção mexe só aqui (e nas páginas de /equipe/). */
+const CONFIG = {
+  nomeSite: "Sensitá",
+  geral: { tel: "(47) 98465-9072", wa: "5547984659072" },
+  mapsUrl: "https://www.google.com/maps/dir/?api=1&destination=R.%20Manoel%20Lu%C3%ADs%20da%20Silva%2C%20182%2C%20Vila%20Nova%2C%20Jaragu%C3%A1%20do%20Sul%2C%20SC",
+  googleUrl: "https://www.google.com/maps/search/?api=1&query=Sensit%C3%A1%20Clinic%20Est%C3%A9tica%20e%20Sa%C3%BAde%2C%20Jaragu%C3%A1%20do%20Sul", // [CONFIRMAR] trocar pelo link exato da ficha no Google
+  horarios: { 0: null, 1: [9, 20], 2: [9, 20], 3: [9, 20], 4: [9, 20], 5: [9, 20], 6: [9, 12] },
+  profissionais: [
+    { id: "karina",  servico: "Harmonização facial", servicoMsg: "harmonização facial",  nome: "Karina",  nomeCompleto: "Karina Ikeda",    tel: "(47) 99154-1298", wa: "5547991541298" },
+    { id: "juliana", servico: "Sobrancelhas",        servicoMsg: "sobrancelha",          nome: "Juliana", nomeCompleto: "Juliana Ferrari", tel: "(47) 99223-9297", wa: "5547992239297" },
+    { id: "sabrina", servico: "Head spa",            servicoMsg: "head spa",             nome: "Sabrina", nomeCompleto: "Sabrina Vieira",  tel: "(47) 99909-2480", wa: "5547999092480" },
+    { id: "mayra",   servico: "Unhas",               servicoMsg: "unhas",                nome: "Mayra",   nomeCompleto: "Mayra Sampaio",   tel: "(47) 98881-2635", wa: "5547988812635" },
+    { id: "rafaela", servico: "Terapias manuais",    servicoMsg: "terapia manual",       nome: "Rafaela", nomeCompleto: "Rafaela Monarin", tel: "(47) 99936-3928", wa: "5547999363928" },
+    { id: "luana",   servico: "Nutrição",            servicoMsg: "consulta de nutrição", nome: "Luana",   nomeCompleto: "Luana Correa",    tel: "(47) 99648-1438", wa: "5547996481438" }
+  ]
+};
+
+(function () {
+  const root = document.documentElement;
+  root.classList.remove("no-js"); root.classList.add("js");
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const byId = Object.fromEntries(CONFIG.profissionais.map(p => [p.id, p]));
+  const waLink = p => "https://wa.me/" + p.wa + "?text=" + encodeURIComponent("Oi, " + p.nome + "! Vim pelo site da " + CONFIG.nomeSite + " e queria marcar " + p.servicoMsg + ".");
+
+  $$("[data-wa]").forEach(a => { const p = byId[a.dataset.wa]; if (p) a.href = waLink(p); });
+  $$("[data-tel]").forEach(el => { const p = byId[el.dataset.tel]; if (p) el.textContent = p.tel; });
+  $$("[data-wa-geral]").forEach(a => { a.href = "https://wa.me/" + CONFIG.geral.wa; });
+  $$("[data-maps]").forEach(a => { a.href = CONFIG.mapsUrl; });
+  $$("[data-google]").forEach(a => { a.href = CONFIG.googleUrl; });
+
+  // Título: cada palavra sobe de dentro de uma máscara
+  const h1 = $("#h1");
+  h1.setAttribute("aria-label", h1.textContent);
+  h1.innerHTML = h1.textContent.split(" ").map((w, i) => '<span class="w" aria-hidden="true"><span style="--i:' + i + '">' + w + '</span></span>').join(" ");
+
+  // Citação grande: palavras acendem conforme a rolagem
+  const bigq = $("#bigq");
+  bigq.innerHTML = bigq.textContent.split(" ").map(w => '<span class="wd">' + w + '</span>').join(" ");
+  const words = $$(".wd", bigq);
+
+  const ready = () => document.body.classList.add("ready");
+  const intro = $("#intro"), introOn = root.classList.contains("intro-on");
+  const D = introOn ? 1700 : 0;
+  if (introOn) {
+    let ended = false;
+    const end = () => { if (ended) return; ended = true; ready(); root.classList.add("intro-done"); intro.remove(); };
+    const skip = () => { ready(); intro.style.transition = "opacity 300ms ease"; intro.style.opacity = "0"; setTimeout(end, 300); };
+    intro.addEventListener("click", skip);
+    addEventListener("keydown", skip, { once: true });
+    intro.addEventListener("animationend", e => { if (e.animationName === "iris") end(); });
+    setTimeout(ready, D);
+    setTimeout(end, 3000);
+  } else {
+    requestAnimationFrame(() => requestAnimationFrame(ready));
+    setTimeout(ready, 60);
+  }
+
+  // Contagem das avaliações
+  const count = $("#count");
+  if (!reduce) {
+    const t0 = performance.now() + 700 + D, dur = 1200;
+    const tick = now => {
+      const k = Math.min(1, Math.max(0, (now - t0) / dur));
+      if (now - t0 > dur + 400) { count.textContent = "215"; return; }
+      count.textContent = Math.round(215 * (1 - Math.pow(1 - k, 3)));
+      if (k < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+    setTimeout(() => { count.textContent = "215"; }, 2600 + D);
+  }
+
+  // Seletor
+  const pick = $("#pick"), cta = $("#cta"), spot = $("#spot");
+  const strip = $$(".strip button");
+  let current = "juliana", timer;
+  function moveSpot(id) {
+    const i = strip.findIndex(s => s.dataset.id === id);
+    if (i > -1) spot.style.transform = "translateX(" + (i * 50) + "px)";
+  }
+  function paint(p) {
+    $("#pick-name").textContent = p.nomeCompleto;
+    $("#pick-svc").textContent = p.servico;
+    $("#pick-more").href = "equipe/" + p.id + ".html";
+    $("#cta-t").textContent = "Marcar com " + p.nome;
+    $("#cta-note").textContent = "Abre o WhatsApp dela, " + p.tel + ", com a mensagem pronta.";
+  }
+  function select(id) {
+    const p = byId[id]; if (!p) return;
+    $$(".chip").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.id === id)));
+    strip.forEach(s => { s.classList.toggle("on", s.dataset.id === id); s.setAttribute("aria-pressed", String(s.dataset.id === id)); });
+    moveSpot(id);
+    cta.href = waLink(p);
+    if (id === current) { paint(p); return; }
+    current = id;
+    clearTimeout(timer);
+    pick.classList.add("swap");
+    timer = setTimeout(() => {
+      paint(p); pick.classList.remove("swap");
+      cta.classList.remove("shine"); void cta.offsetWidth; cta.classList.add("shine");
+    }, reduce ? 80 : 160);
+  }
+  $$(".chip").forEach(b => b.addEventListener("click", () => select(b.dataset.id)));
+  strip.forEach(b => b.addEventListener("click", () => select(b.dataset.id)));
+  select("juliana");
+  addEventListener("resize", () => moveSpot(current));
+
+  // Aberto agora (horário de Brasília)
+  try {
+    const parts = Object.fromEntries(new Intl.DateTimeFormat("en-US", { timeZone: "America/Sao_Paulo", weekday: "short", hour: "numeric", minute: "numeric", hourCycle: "h23" }).formatToParts(new Date()).map(x => [x.type, x.value]));
+    const day = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].indexOf(parts.weekday);
+    const h = Number(parts.hour) + Number(parts.minute) / 60;
+    const nomes = ["domingo","segunda","terça","quarta","quinta","sexta","sábado"];
+    const hj = CONFIG.horarios[day];
+    let txt, open = false;
+    if (hj && h >= hj[0] && h < hj[1]) { open = true; txt = "Aberto agora, até " + (hj[1] === 12 ? "o meio-dia" : "as " + hj[1] + "h") + "."; }
+    else if (hj && h < hj[0]) txt = "Fechado agora. Abre hoje às " + hj[0] + "h.";
+    else {
+      let d = (day + 1) % 7, n = 1;
+      while (!CONFIG.horarios[d] && n < 7) { d = (d + 1) % 7; n++; }
+      txt = "Fechado agora. Abre " + (n === 1 ? "amanhã" : nomes[d]) + " às " + CONFIG.horarios[d][0] + "h.";
+    }
+    $("#status-t").textContent = txt;
+    $("#status").classList.toggle("open", open);
+    $$("[data-days]").forEach(el => {
+      const r = el.dataset.days.split("-").map(Number);
+      if (day >= r[0] && day <= (r[1] ?? r[0])) el.classList.add("today");
+    });
+  } catch (e) {}
+
+  // Entradas ao rolar e barra fixa
+  const bar = $("#bar"), barBtn = $("#bar a");
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .15, rootMargin: "0px 0px -8% 0px" });
+    $$("[data-r]").forEach(el => io.observe(el));
+    new IntersectionObserver(([e]) => {
+      const show = !e.isIntersecting;
+      bar.classList.toggle("show", show);
+      bar.setAttribute("aria-hidden", String(!show));
+      barBtn.tabIndex = show ? 0 : -1;
+    }).observe(cta);
+  } else $$("[data-r]").forEach(el => el.classList.add("in"));
+
+  // Efeitos ligados à rolagem: citação, frase do espaço, linha dos passos
+  if (reduce) { words.forEach(w => w.classList.add("lit")); return; }
+  const lines = $$("#espaco [data-px]"), space = $("#espaco"), steps = $("#steps"), stepLis = $$("#steps li");
+  const prog = (el, a, b) => { const r = el.getBoundingClientRect(), vh = innerHeight; return Math.min(1, Math.max(0, (vh * a - r.top) / (r.height + vh * (a - b)))); };
+  let ticking = false;
+  const stageImg = $(".stage-img"), stage = $(".stage");
+  function onScroll() {
+    ticking = false;
+    if (document.body.classList.contains("ready") && scrollY < stage.offsetHeight) stageImg.style.translate = "0 " + (scrollY * .25).toFixed(1) + "px";
+    const pq = prog(bigq, .85, .35);
+    const lit = Math.round(pq * words.length);
+    words.forEach((w, i) => w.classList.toggle("lit", i < lit));
+    const ps = prog(space, 1, 0);
+    const cw = space.querySelector(".wrap").clientWidth - 40;
+    lines.forEach(l => { const ov = Math.max(0, l.scrollWidth - cw); const k = l.dataset.px === "-1" ? ps : 1 - ps; l.style.transform = "translateX(" + (-ov * k).toFixed(1) + "px)"; });
+    const pst = prog(steps, .8, .45);
+    steps.style.setProperty("--p", pst.toFixed(3));
+    stepLis.forEach((li, i) => li.classList.toggle("on", pst >= (stepLis.length > 1 ? i / (stepLis.length - 1) : 0) - .02));
+  }
+  addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  onScroll();
+})();
+</script>
+</body>
+</html>
